@@ -1,0 +1,95 @@
+html, body, #root {
+  margin: 0;
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#root {
+  background-image: url(../assets/background.jpg);
+  background-size: 100%;
+}
+
+body, h1, h2, h3 {
+  font-weight: 300
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #5aadbb;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  background-color: #1f1f1f;
+  height: 60px;
+}
+.header-title {
+  font-size: 3.5rem;
+  margin: auto;
+}
+.header-date {
+  flex: 1;
+  text-align: right;
+  margin: 1rem;
+  color: white;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #cf4646;
+  color: white;
+}
+.title-h1 {
+  font-weight: 300;
+  font-size: 4rem;
+  margin: 1rem;
+}
+.title-logo {
+  height: 12rem;
+  background-color: white;
+  border-radius: 1rem;
+  margin: 1rem;
+}
+.title-h2 {
+  font-weight: 300;
+  font-size: 2rem;
+  margin: .5rem;
+}
+
+.footer {
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #1f1f1f;
+  text-align: center;
+  color: white;
+}
+
+.content {
+  display: flex;
+  height: calc(100% - 84px);
+  min-width: 550px;
+}
+
+.pizza-orderer, .ms-signin {
+  margin: auto;
+  background: rgba(255, 255, 255, 0.4);
+  padding: 20px;
+}
