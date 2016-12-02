@@ -1,13 +1,13 @@
 import Auth from './auth.js';
 import axios from 'axios';
 
-class PizzaService {
+class BaseService {
   static fetchAll() {
     if (!Auth.isAuthentified) {
       return null;
     }
-    return axios.get('/pizza');
+    return axios.get('/base');
   }
 }
 
-export default PizzaService;
+export default BaseService;

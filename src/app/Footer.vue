@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    Build with ♥ by the&nbsp;
+    Build by&nbsp;
     <a href="mailto:blitz@viacesi.fr">
       Blitz
     </a>

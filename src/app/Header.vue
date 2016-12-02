@@ -1,10 +1,10 @@
 <template>
-  <header class="header">
-    <p class="header-title">
-      <a href="/">
-        Pizza Time
-      </a>
-    </p>
+  <header>
+    <div class="mui-appbar header">
+      <div class="header-title">
+        <a href="/">Pizza Time</a>
+      </div>
+    </div>
   </header>
 </template>
 

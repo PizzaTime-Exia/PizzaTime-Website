@@ -6,21 +6,21 @@ class OrderService {
     if (!Auth.isAuthentified) {
       return null;
     }
-    return Axios.get('/orders/' + Auth.user.id);
+    return Axios.get('/orders');
   }
 
   static add(order) {
     if (!Auth.isAuthentified) {
       return null;
     }
-    return Axios.post('/orders/' + Auth.user.id), order;
+    return Axios.post('/orders', order);
   }
 
   static remove(order) {
     if (!Auth.isAuthentified) {
       return null;
     }
-    return Axios.delete('/orders/' + Auth.user.id, order);
+    return Axios.delete('/orders/' + order.id);
   }
 }
 

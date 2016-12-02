@@ -6,7 +6,9 @@ html, body, #root {
 
 #root {
   background-image: url(../assets/background.jpg);
-  background-size: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
 }
 
 body, h1, h2, h3 {
@@ -41,12 +43,6 @@ a:hover {
 .header-title {
   font-size: 3.5rem;
   margin: auto;
-}
-.header-date {
-  flex: 1;
-  text-align: right;
-  margin: 1rem;
-  color: white;
 }
 
 .title {
@@ -84,7 +80,7 @@ a:hover {
 
 .content {
   display: flex;
-  height: calc(100% - 84px);
+  height: calc(100% - 88px);
   min-width: 550px;
 }
 
@@ -92,4 +88,23 @@ a:hover {
   margin: auto;
   background: rgba(255, 255, 255, 0.4);
   padding: 20px;
+  min-width: 582px;
+  width: 582px;
+}
+
+.order-confirm {
+  text-align: center;
+}
+
+.item-list {
+  min-height: 178px;
+}
+
+#pizza button, #base button {
+  width: 236px;
+}
+
+.date-warning {
+  color: crimson;
+  font-weight: bold;
 }
