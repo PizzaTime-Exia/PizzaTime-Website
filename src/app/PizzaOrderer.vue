@@ -57,7 +57,7 @@ import _ from 'lazy.js';
 import PizzaService from './services/pizza.js';
 import BaseService from './services/base.js';
 import ConfigService from './services/config.js';
-import Order from './order.js';
+import Order from './Order.js';
 
 export default {
   name: 'PizzaOrderer',
