@@ -14,7 +14,7 @@ import Header from './Header.vue';
 import PizzaOrderer from './PizzaOrderer.vue';
 import MicrosoftSignIn from './MicrosoftSignIn.vue';
 import Footer from './Footer.vue';
-//import AuthService from './serivces/auth.js';
+import AuthService from './services/auth.js';
 
 export default {
   name: 'Pizza',
@@ -26,8 +26,7 @@ export default {
   },
   computed: {
     isAuthentified() {
-      //return AuthService.isAuthentified;
-      return true;
+      return AuthService.isAuthentified;
     }
   }
 };

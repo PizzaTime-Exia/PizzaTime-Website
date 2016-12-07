@@ -1,12 +1,8 @@
-import Auth from './auth.js';
-import axios from 'axios';
+import api from './api';
 
 class BaseService {
   static fetchAll() {
-    if (!Auth.isAuthentified) {
-      return null;
-    }
-    return axios.get('/base');
+    return api.get('/base');
   }
 }
 

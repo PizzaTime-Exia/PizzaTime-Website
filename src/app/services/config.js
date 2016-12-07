@@ -1,12 +1,8 @@
-import Auth from './auth.js';
-import Axios from 'axios';
+import api from './api';
 
 class ConfigService {
   static maxOrderTime() {
-    if (!Auth.isAuthentified) {
-      return null;
-    }
-    return Axios.get('/config/maxOrderTime');
+    return api.get('/config/maxOrderTime');
   }
 }
 

@@ -1,14 +1,26 @@
+import cookies from 'browser-cookies';
+import config from './../../config.json';
+
 class AuthService {
-  static get authenticate() {
-    return null;
+  static get connect() {
+    window.location.replace(`${config.api.url}login`);
+  }
+
+  static get token() {
+    return cookies.get('token');
   }
 
   static get isAuthentified() {
-    return true;// Boolean(AuthService.user) && AuthService.user.id > -1;
+    return Boolean(AuthService.token);
   }
 
-  static get user() {
-    return null;
+  static get username() {
+    return cookies.get('username');
+  }
+
+  static diconnect() {
+    cookies.erase('token');
+    cookies.erase('username');
   }
 }
 

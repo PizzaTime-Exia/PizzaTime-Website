@@ -108,3 +108,19 @@ a:hover {
   color: crimson;
   font-weight: bold;
 }
+
+.signin-button button {
+  margin: auto;
+  display: block;
+  width: 290px;
+}
+
+.user-bar {
+  margin: 7px;
+  position: absolute;
+  right: 10px;
+}
+
+.user-bar button {
+  background-color: transparent;
+}

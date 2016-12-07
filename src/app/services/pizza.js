@@ -1,12 +1,8 @@
-import Auth from './auth.js';
-import axios from 'axios';
+import api from './api';
 
 class PizzaService {
   static fetchAll() {
-    if (!Auth.isAuthentified) {
-      return null;
-    }
-    return axios.get('/pizza');
+    return api.get('/pizzas');
   }
 }
 

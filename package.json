@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "browser-cookies": "^1.0.8",
     "lazy.js": "^0.4.2",
     "vue": "^2.0.0-rc.6",
     "vue-resource": "^0.9.3",
