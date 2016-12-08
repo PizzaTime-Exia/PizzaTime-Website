@@ -22,21 +22,13 @@
       <button class="mui-btn mui-btn--primary" v-on:click="addOrderItem()">+</button>
     </div>
     <div class="item-list">
-      <table class="mui-table mui-table--bordered">
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Base</th>
-            <th>Prix</th>
-            <th></th>
-          </tr>
-        </thead>
+      <table class="mui-table mui-table--bordered items-table">
         <tbody>
           <tr v-if="!!order" v-for="item in order.items">
             <td>{{ item.pizza.name }}</td>
             <td>{{ item.base.name }}</td>
             <td>{{ item.pizza.price }}</td>
-            <td><button class="mui-btn mui-btn--small mui-btn--danger" v-on:click="deleteOrderItem(item.id)">X</button></td>
+            <td align="right"><button class="mui-btn mui-btn--small mui-btn--danger" v-on:click="deleteOrderItem(item.id)">X</button></td>
           </tr>
         </tbody>
       </table>
@@ -69,8 +61,15 @@ export default {
           minutes: 0
         }
       },
-      pizzas: [],
-      bases: [],
+      pizzas: [
+        {id: 1, name: 'Pizza1', base: {id: 1, name: 'Tomate'}, price: 5.5},
+        {id: 2, name: 'Pizza2', base: {id: 2, name: 'Crème'}, price: 5.5},
+        {id: 3, name: 'Pizza3', base: {id: 1, name: 'Tomate'}, price: 6.5}
+      ],
+      bases: [
+        {id: 1, name: 'Tomate'},
+        {id: 2, name: 'Crème'}
+      ],
       selected: {
         pizza: null,
         base: null

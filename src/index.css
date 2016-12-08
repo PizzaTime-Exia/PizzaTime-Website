@@ -96,8 +96,21 @@ a:hover {
   text-align: center;
 }
 
+.items-table {
+  border-collapse: collapse;
+}
+
+.items-table tbody {
+  box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+  max-height: 500px;
+}
+
+.items-table tr {
+    background-color: #fff;
+}
+
 .item-list {
-  min-height: 178px;
+  min-height: 192px;
 }
 
 #pizza button, #base button {
