@@ -10,11 +10,14 @@
 </template>
 
 <script>
+import cookies from 'browser-cookies';
+import qs from 'query-string';
 import Header from './Header.vue';
 import PizzaOrderer from './PizzaOrderer.vue';
 import MicrosoftSignIn from './MicrosoftSignIn.vue';
 import Footer from './Footer.vue';
-import AuthService from './services/auth.js';
+import AuthService from './services/auth';
+import api from './services/api';
 
 export default {
   name: 'Pizza',
@@ -23,6 +26,13 @@ export default {
     'pizza-orderer-component': PizzaOrderer,
     'ms-signin-component': MicrosoftSignIn,
     'footer-component': Footer
+  },
+  created() {
+    AuthService.load();
+    const args = qs.parse(window.location.search);
+    if (args.name && args.token) {
+      AuthService.connect(args.name, args.token);
+    }
   },
   computed: {
     isAuthentified() {

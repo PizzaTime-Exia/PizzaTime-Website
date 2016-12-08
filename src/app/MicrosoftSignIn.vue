@@ -13,7 +13,7 @@ export default {
   name: 'MicrosoftSignIn',
   methods: {
     connect() {
-      return AuthService.connect();
+      return AuthService.signin();
     }
   }
 };

@@ -69,15 +69,8 @@ export default {
           minutes: 0
         }
       },
-      pizzas: [
-        {id: 1, name: 'Pizza1', base: {id: 1, name: 'Tomate'}, price: 5.5},
-        {id: 2, name: 'Pizza2', base: {id: 2, name: 'Crème'}, price: 5.5},
-        {id: 3, name: 'Pizza3', base: {id: 1, name: 'Tomate'}, price: 6.5}
-      ],
-      bases: [
-        {id: 1, name: 'Tomate'},
-        {id: 2, name: 'Crème'}
-      ],
+      pizzas: [],
+      bases: [],
       selected: {
         pizza: null,
         base: null
@@ -141,18 +134,7 @@ export default {
       console.log(this.order.items);
     }
   },
-  beforeRouteEnter (to, from, next) {
-    // Redirect user to sigin page if not logged
-    /*if (!Auth.isAuthentified) {
-      router.push({ path: 'signin' })
-    }*/
-  },
   created() {
-    // Load config
-    // Load pizzas
-    // Load bases
-    // Load active order if exists
-    /*
     PizzaService
       .fetchAll()
       .then(response => {
@@ -164,13 +146,6 @@ export default {
       .then(response => {
         this.bases = response.data;
       });
-    
-    ConfigService
-      .maxOrderTime()
-      .then(response => {
-        this.config.maxOrderTime = reponse || this.config.maxOrderTime;
-      });
-    */
   }
 };
 </script>

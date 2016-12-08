@@ -7,7 +7,7 @@
       <td v-if="isAuthentified" class="mui--appbar-height user-bar" align="right">
         <div class="mui-dropdown">
           <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
-            {{ user.name }}
+            {{ username }}
           </button>
           <ul class="mui-dropdown__menu mui-dropdown__menu--right">
             <li v-on:click="disconnect()"><a href="#">Déconnexion</a></li>
@@ -27,7 +27,7 @@ export default {
     isAuthentified() {
       return AuthService.isAuthentified;
     },
-    user() {
+    username() {
       return AuthService.username;
     }
   },

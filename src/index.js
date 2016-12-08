@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Pizza from './app/Pizza.vue';
-import LoginHook from './app/LoginHook.vue';
 
 import './index.css';
 import VueRouter from 'vue-router';
@@ -13,12 +12,6 @@ const router = new VueRouter({
       path: '/',
       components: {
         default: Pizza
-      }
-    },
-    {
-      path: '/login/:name/:token',
-      components: {
-        default: LoginHook
       }
     }
   ]
