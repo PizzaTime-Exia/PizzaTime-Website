@@ -37,11 +37,8 @@
       <div class="order-button">
         <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">Commander | {{ order.price }}€ | <span v-bind:class="{ 'date-warning': isDateAmbiguous }">{{ nextFriday }}</span></button>
       </div>
-      <div v-if="canCancelOrder">
-        &nbsp;
-        <div class="order-button">
-          <button class="add-item mui-btn mui-btn--danger" v-on:click="cancelOrder()">Annuler ma commande</button>
-        </div>
+      <div class="order-button">
+        <button class="add-item mui-btn mui-btn--danger" v-if="canCancelOrder" v-on:click="cancelOrder()">Annuler ma commande</button>
       </div>
       <div class="order-details">
         <span class="error-message">{{ errorMessage }}.</span>
@@ -169,8 +166,8 @@ export default {
           this.order.delivered = response.data.delivered;
           this.order.paid = response.data.paid;
           response.data.items.forEach(item => {
-            let pizza = _(this.pizzas).find(x => x.id === item.pizza.id);
-            let base = _(this.bases).find(x => x.id === item.pizza.base.id);
+            let pizza = _(this.pizzas).find(x => x.id === item.pizzaId);
+            let base = _(this.bases).find(x => x.id === item.baseId);
             this.order.add(pizza, base);
           });
         }
