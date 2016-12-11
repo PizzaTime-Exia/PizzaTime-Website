@@ -24,8 +24,8 @@ class Order {
       .sum();
   }
 
-  add(pizza, base, isNew = false) {
-    this.items.push({id: ++ID, pizza, base, isNew: isNew});
+  add(pizza, base) {
+    this.items.push({id: ++ID, pizza, base});
   }
 
   remove(id) {
@@ -35,7 +35,7 @@ class Order {
   toApiFormat() {
     return {
       items: _(this.items).map(item => {
-        return {pizzaId: item.pizza.id, baseId: item.base.id}
+        return {pizzaId: item.pizza.id, baseId: item.base.id};
       }).toArray()
     };
   }

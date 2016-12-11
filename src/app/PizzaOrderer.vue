@@ -69,7 +69,7 @@ export default {
         base: null
       },
       order: new Order(),
-      orderDay: Date.now();
+      orderDay: Date.now()
     }
   },
   computed: {
