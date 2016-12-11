@@ -21,7 +21,8 @@ class Order {
   get price() {
     return _(this.items)
       .map(x => x.pizza.price)
-      .sum();
+      .sum()
+      .toFixed(2);
   }
 
   add(pizza, base) {
