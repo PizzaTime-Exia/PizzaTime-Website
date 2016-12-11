@@ -137,12 +137,14 @@ export default {
         return;
       }
       if (this.order.id < 0) {
-        OrderService.add(this.order.toApiFormat());
-        this.loadOrder();
+        OrderService
+          .add(this.order.toApiFormat())
+          .then(x => this.loadOrder());
         alert(`${this.order.count} pizzas commandées.`);
       } else {
-        OrderService.replace(this.order.id, this.order.toApiFormat());
-        this.loadOrder();
+        OrderService
+          .replace(this.order.id, this.order.toApiFormat())
+          .then(x => this.loadOrder());
         alert(`${this.order.count} pizzas commandées.`);
       }
     },
