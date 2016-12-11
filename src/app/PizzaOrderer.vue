@@ -151,7 +151,7 @@ export default {
         OrderService
           .remove(this.order.id)
           .then(x => {
-            this.order.clear();
+            this.order = new Order();
             alert('Commande annulée.');
           });
       }
@@ -160,6 +160,7 @@ export default {
       OrderService
         .fetchAll()
         .then(response => {
+          this.order = new Order();
           if (response.data.id >= 0) {
             this.order.id = response.data.id;
             this.order.delivered = response.data.delivered;
