@@ -153,22 +153,16 @@ export default {
       .orderDay()
       .then(response => {
         this.orderDay = new Date(response.data);
-      });
-
-    PizzaService
-      .fetchAll()
-      .then(response => {
-        this.pizzas = response.data;
-      });
-
-    BaseService
-      .fetchAll()
+        return BaseService.fetchAll();
+      })
       .then(response => {
         this.bases = response.data;
-      });
-    
-    OrderService
-      .fetchAll()
+        return PizzaService.fetchAll();
+      })
+      .then(response => {
+        this.pizzas = response.data;
+        return OrderService.fetchAll();
+      })
       .then(response => {
         if (response.data.id >= 0) {
           this.order.id = response.data.id;
