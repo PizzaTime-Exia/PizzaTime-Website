@@ -69,7 +69,7 @@ export default {
         base: null
       },
       order: new Order(),
-      orderDay: Date.now()
+      orderDay: new Date()
     }
   },
   computed: {
@@ -96,7 +96,7 @@ export default {
       return this.orderDay.toLocaleDateString();
     },
     isDateAmbiguous() {
-      let today = Date.now();
+      let today = new Date();
       let friday = new Date(this.orderDay.toISOString());
       today.setHours(0,0,0,0);
       friday.setHours(0,0,0,0);
