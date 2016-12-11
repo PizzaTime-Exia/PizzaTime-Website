@@ -4,6 +4,7 @@ let ID = 0;
 
 class Order {
   constructor(items) {
+    this.id = -1;
     this.items = items || [];
     this.delivred = false;
     this.paid = false;
@@ -23,19 +24,19 @@ class Order {
       .sum();
   }
 
-  add(pizza, base) {
-    this.items.push({id: ++ID, pizza, base});
+  add(pizza, base, isNew = false) {
+    this.items.push({id: ++ID, pizza, base, isNew: isNew});
   }
 
   remove(id) {
     this.items = _(this.items).filter(x => x.id !== id).toArray();
   }
 
-  toApiFormatedArray() {
+  toApiFormat() {
     return {
       items: _(this.items).map(item => {
-        return {id: item.pizza.id, base: {id: item.base.id}};
-      })
+        return {pizzaId: item.pizza.id, baseId: item.base.id}
+      }).toArray()
     };
   }
 }

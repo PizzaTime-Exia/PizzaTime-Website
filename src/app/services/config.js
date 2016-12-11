@@ -1,8 +1,8 @@
 import api from './api';
 
 class ConfigService {
-  static maxOrderTime() {
-    return api.get('/config/maxOrderTime');
+  static orderDay() {
+    return api.get('/config/end_date');
   }
 }
 

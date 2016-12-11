@@ -8,6 +8,7 @@
         <div class="mui-dropdown">
           <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
             {{ username }}
+            <span class="mui-caret"></span>
           </button>
           <ul class="mui-dropdown__menu mui-dropdown__menu--right">
             <li v-on:click="disconnect()"><a href="#">Déconnexion</a></li>

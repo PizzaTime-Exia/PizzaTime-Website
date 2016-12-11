@@ -35,12 +35,17 @@
     </div>
     <div class="order-confirm">
       <div class="order-button">
-        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="orderLocked">Commander <span v-bind:class="{ 'date-warning': isDateAmbiguous }">({{ nextFriday }})</span></button>
+        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">Commander | {{ order.price }}€ | <span v-bind:class="{ 'date-warning': isDateAmbiguous }">{{ nextFriday }}</span></button>
+      </div>
+      <div v-if="canCancelOrder">
+        &nbsp;
+        <div class="order-button">
+          <button class="add-item mui-btn mui-btn--danger" v-on:click="cancelOrder()">Annuler ma commande</button>
+        </div>
       </div>
       <div class="order-details">
-        <span> {{ order.count }} pizzas pour un total de {{ order.price }}€.</span>
+        <span class="error-message">{{ errorMessage }}.</span>
       </div>
-      <p class="error-message">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
@@ -57,30 +62,21 @@ export default {
   name: 'PizzaOrderer',
   data() {
     return {
-      config: {
-        maxOrderTime: {
-          hours: 10,
-          minutes: 0
-        }
-      },
-      pizzas: [
-        {id: 1, name: 'Pizza1', base: {id: 1, name: 'Tomate'}, price: 5.5},
-        {id: 2, name: 'Pizza2', base: {id: 2, name: 'Crème'}, price: 5.5},
-        {id: 3, name: 'Pizza3', base: {id: 1, name: 'Tomate'}, price: 6.5}
-      ],
-      bases: [
-        {id: 1, name: 'Tomate'},
-        {id: 2, name: 'Crème'}
-      ],
+      pizzas: [],
+      bases: [],
       selected: {
         pizza: null,
         base: null
       },
-      order: new Order()
+      order: new Order(),
+      orderDay: Date.now();
     }
   },
   computed: {
-    orderLocked() {
+    canCancelOrder() {
+      return this.order.id >= 0 && !this.isOderLocked;
+    },
+    isOrderLocked() {
       return this.order.paid || this.order.delivered;
     },
     errorMessage() {
@@ -97,32 +93,17 @@ export default {
       return this.selected.base ? this.selected.base.name : 'Choisissez une base';
     },
     nextFriday() {
-      return this.formatDate(this.getNextFriday());
+      return this.orderDay.toLocaleDateString();
     },
     isDateAmbiguous() {
-      let today = new Date();
-      let friday = this.getNextFriday();
+      let today = Date.now();
+      let friday = new Date(this.orderDay.toISOString());
       today.setHours(0,0,0,0);
       friday.setHours(0,0,0,0);
       return (today.getTime() === friday.getTime());
     }
   },
   methods: {
-    formatDate(date) {
-      return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-    },
-    getNextFriday() {
-      let today = new Date();
-      let maxOrderTime = this.config.maxOrderTime;
-      let dayOfToday = today.getDay();
-
-      if (dayOfToday === 5 && (today.getHours() < maxOrderTime.hours
-        || today.getHours() === maxOrderTime.hours && today.getMinutes() < maxOrderTime.minutes)) {
-        return this.formatDate(today);
-      }
-
-      return new Date(today.setDate(today.getDate() + (7 + 5 - today.getDay()) % 7));
-    },
     pizzaSelected(pizzaId) {
       this.selected.pizza = _(this.pizzas).find(x => x.id === pizzaId);
       this.selected.base = this.selected.pizza.base;
@@ -155,10 +136,25 @@ export default {
         alert('Cette commande vous à déjà été livrée, impossible de la modifier.');
         return;
       }
-      OrderService.add(this.order.toApiFormatedArray());
+      if (this.order.id < 0) {
+        OrderService.add(this.order.toApiFormat());
+      } else {
+        OrderService.replace(this.order.id, this.order.toApiFormat());
+      }
+    },
+    cancelOrder() {
+      if (this.order.id >= 0) {
+        OrderService.remove(this.order.id);
+      }
     }
   },
   created() {
+    ConfigService
+      .orderDay()
+      .then(response => {
+        this.orderDay = new Date(response.data);
+      });
+
     PizzaService
       .fetchAll()
       .then(response => {
@@ -174,16 +170,16 @@ export default {
     OrderService
       .fetchAll()
       .then(response => {
-        if (!response.data.items) {
-          return;
+        if (response.data.id >= 0) {
+          this.order.id = response.data.id;
+          this.order.delivered = response.data.delivered;
+          this.order.paid = response.data.paid;
+          response.data.items.forEach(item => {
+            let pizza = _(this.pizzas).find(x => x.id === item.pizza.id);
+            let base = _(this.bases).find(x => x.id === item.pizza.base.id);
+            this.order.add(pizza, base);
+          });
         }
-        response.data.itemsforEach(item => {
-          let pizza = _(this.pizzas).find(x => x.id === item.pizza.id);
-          let base = _(this.bases).find(x => x.id === item.pizza.base.id);
-          this.order.add(pizza, base);
-        });
-        this.order.delivered = response.data.delivered;
-        this.order.paid = response.data.paid;
       });
   }
 };
