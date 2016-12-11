@@ -35,10 +35,10 @@
     </div>
     <div class="order-confirm">
       <div class="order-button">
-        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">Commander | {{ order.price }}€ | <span v-bind:class="{ 'date-warning': isDateAmbiguous }">{{ nextFriday }}</span></button>
+        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€ | <span v-bind:class="{ 'date-warning': isDateAmbiguous }">{{ nextFriday }}</span></button>
       </div>
-      <div class="order-button">
-        <button class="add-item mui-btn mui-btn--danger" v-if="canCancelOrder" v-on:click="cancelOrder()">Annuler ma commande</button>
+      <div class="order-button" v-if="canCancelOrder">
+        <button class="add-item mui-btn mui-btn--danger" v-on:click="cancelOrder()">Annuler ma commande</button>
       </div>
       <div class="order-details">
         <span class="error-message">{{ errorMessage }}.</span>
@@ -70,6 +70,9 @@ export default {
     }
   },
   computed: {
+    orderText() {
+      return this.canCancelOrder ? 'Modifier ma commande' : 'Commander';
+    },
     canCancelOrder() {
       return this.order.id >= 0 && !this.isOderLocked;
     },
@@ -135,14 +138,39 @@ export default {
       }
       if (this.order.id < 0) {
         OrderService.add(this.order.toApiFormat());
+        this.loadOrder();
+        alert(`${this.order.count} pizzas commandées.`);
       } else {
         OrderService.replace(this.order.id, this.order.toApiFormat());
+        this.loadOrder();
+        alert(`${this.order.count} pizzas commandées.`);
       }
     },
     cancelOrder() {
       if (this.order.id >= 0) {
-        OrderService.remove(this.order.id);
+        OrderService
+          .remove(this.order.id)
+          .then(x => {
+            this.order.clear();
+            alert('Commande annulée.');
+          });
       }
+    },
+    loadOrder() {
+      OrderService
+        .fetchAll()
+        .then(response => {
+          if (response.data.id >= 0) {
+            this.order.id = response.data.id;
+            this.order.delivered = response.data.delivered;
+            this.order.paid = response.data.paid;
+            response.data.items.forEach(item => {
+              let pizza = _(this.pizzas).find(x => x.id === item.pizzaId);
+              let base = _(this.bases).find(x => x.id === item.baseId);
+              this.order.add(pizza, base);
+            });
+          }
+        });
     }
   },
   created() {
@@ -158,19 +186,7 @@ export default {
       })
       .then(response => {
         this.pizzas = response.data;
-        return OrderService.fetchAll();
-      })
-      .then(response => {
-        if (response.data.id >= 0) {
-          this.order.id = response.data.id;
-          this.order.delivered = response.data.delivered;
-          this.order.paid = response.data.paid;
-          response.data.items.forEach(item => {
-            let pizza = _(this.pizzas).find(x => x.id === item.pizzaId);
-            let base = _(this.bases).find(x => x.id === item.baseId);
-            this.order.add(pizza, base);
-          });
-        }
+        this.loadOrder();
       });
   }
 };

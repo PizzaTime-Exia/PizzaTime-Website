@@ -33,6 +33,10 @@ class Order {
     this.items = _(this.items).filter(x => x.id !== id).toArray();
   }
 
+  clear() {
+    this.items = [];
+  }
+
   toApiFormat() {
     return {
       items: _(this.items).map(item => {
