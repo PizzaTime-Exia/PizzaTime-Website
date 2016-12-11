@@ -10,7 +10,7 @@ class OrderService {
   }
 
   static remove(order) {
-    return api.delete('/orders/' + order.id);
+    return api.delete(`/orders/${order.id}`);
   }
 }
 

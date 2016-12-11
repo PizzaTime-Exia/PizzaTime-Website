@@ -137,3 +137,8 @@ a:hover {
 .user-bar button {
   background-color: transparent;
 }
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}

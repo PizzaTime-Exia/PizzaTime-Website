@@ -35,21 +35,23 @@
     </div>
     <div class="order-confirm">
       <div class="order-button">
-        <button class="add-item mui-btn mui-btn--primary">Commander <span v-bind:class="{ 'date-warning': isDateAmbiguous }">({{ nextFriday }})</span></button>
+        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="orderLocked">Commander <span v-bind:class="{ 'date-warning': isDateAmbiguous }">({{ nextFriday }})</span></button>
       </div>
       <div class="order-details">
         <span> {{ order.count }} pizzas pour un total de {{ order.price }}€.</span>
       </div>
+      <p class="error-message">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
 
 <script>
 import _ from 'lazy.js';
-import PizzaService from './services/pizza.js';
-import BaseService from './services/base.js';
-import ConfigService from './services/config.js';
-import Order from './Order.js';
+import OrderService from './services/order';
+import PizzaService from './services/pizza';
+import BaseService from './services/base';
+import ConfigService from './services/config';
+import Order from './Order';
 
 export default {
   name: 'PizzaOrderer',
@@ -78,6 +80,16 @@ export default {
     }
   },
   computed: {
+    orderLocked() {
+      return this.order.paid || this.order.delivered;
+    },
+    errorMessage() {
+      if (this.order.paid) {
+        return 'Vous avez déjà payé pour cette commande, impossible de la modifier.';
+      } else if (this.order.delivered) {
+        return 'Cette commande vous à déjà été livrée, impossible de la modifier.';
+      }
+    },
     selectedPizzaText() {
       return this.selected.pizza ? this.selected.pizza.name :  'Choisissez une pizza';
     },
@@ -122,15 +134,28 @@ export default {
       if (Boolean(this.selected.pizza) && Boolean(this.selected.base)) {
         this.order.add(this.selected.pizza, this.selected.base);
       } else if (!Boolean(this.selected.pizza)) {
-        console.log('Error: no pizza selected', this.selected.pizza);
+        alert('Vous n\'avez pas sélectionné de pizza.');
       } else if (!Boolean(this.selected.base)) {
-        console.log('Error: no base selected', this.selected.base);
+        alert('Vous n\'avez pas sélectionné de base.');
       }
     },
     deleteOrderItem(itemId) {
-      console.log(this.order.items);
       this.order.remove(itemId);
-      console.log(this.order.items);
+    },
+    validateOrder() {
+      if (this.order.isEmpty) {
+        alert('Vous n\'avez rien commandé.');
+        return;
+      }
+      if (this.order.paid) {
+        alert('Vous avez déjà payé pour cette commande, impossible de la modifier.');
+        return;
+      }
+      if (this.order.delivered) {
+        alert('Cette commande vous à déjà été livrée, impossible de la modifier.');
+        return;
+      }
+      OrderService.add(this.order.toApiFormatedArray());
     }
   },
   created() {
@@ -144,6 +169,21 @@ export default {
       .fetchAll()
       .then(response => {
         this.bases = response.data;
+      });
+    
+    OrderService
+      .fetchAll()
+      .then(response => {
+        if (!response.data.items) {
+          return;
+        }
+        response.data.itemsforEach(item => {
+          let pizza = _(this.pizzas).find(x => x.id === item.pizza.id);
+          let base = _(this.bases).find(x => x.id === item.pizza.base.id);
+          this.order.add(pizza, base);
+        });
+        this.order.delivered = response.data.delivered;
+        this.order.paid = response.data.paid;
       });
   }
 };
