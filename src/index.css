@@ -151,8 +151,8 @@ a:hover {
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
-    background-color: #555;
-    color: #fff;
+    background-color: #fff;
+    color: #555;
     text-align: center;
     padding: 5px 0;
     position: absolute;
@@ -172,7 +172,7 @@ a:hover {
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent #555 transparent;
+    border-color: transparent transparent #fff transparent;
 }
 
 .tooltip:hover .tooltiptext {
