@@ -1,6 +1,10 @@
 <template>
   <header>
     <div class="mui-appbar header">
+      <div class="tooltip bug-reporter" v-on:click="reportBug()">
+        <span>Alpha</span>&nbsp;<i class="fa fa-bug" aria-hidden="true"></i>
+        <span class="tooltiptext">Rapporter un bug</span>
+      </div>
       <div class="header-title">
         <a href="/">Pizza Time</a>
       </div>
@@ -35,6 +39,9 @@ export default {
   methods: {
     disconnect() {
       AuthService.disconnect();
+    },
+    reportBug() {
+      window.location.href = `mailto:pizzatime@viacesi.fr?subject=Bug Report`;
     }
   }
 };
