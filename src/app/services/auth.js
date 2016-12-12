@@ -24,8 +24,8 @@ class AuthService {
   }
 
   static connect(username, token) {
-    cookies.set('username', username);
-    cookies.set('token', token);
+    cookies.set('username', username, {expires: 5});
+    cookies.set('token', token, {expires: 5});
     api.defaults.headers.token = token;
     window.location.replace(`http://${window.location.host}/`);
   }
