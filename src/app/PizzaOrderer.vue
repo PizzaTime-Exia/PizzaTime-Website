@@ -148,7 +148,7 @@ export default {
           .add(this.order.toApiFormat())
           .then(x => this.loadOrder())
           .catch(x => {
-            if (x.status === 419) {
+            if (x.response.status === 419) {
               AuthService.signin();
             }
           });
@@ -158,7 +158,7 @@ export default {
           .replace(this.order.id, this.order.toApiFormat())
           .then(x => this.loadOrder())
           .catch(x => {
-            if (x.status === 419) {
+            if (x.response.status === 419) {
               AuthService.signin();
             }
           });
@@ -174,7 +174,7 @@ export default {
             alert('Commande annulée.');
           })
           .catch(x => {
-            if (x.status === 419) {
+            if (x.response.status === 419) {
               AuthService.signin();
             }
           });
@@ -197,7 +197,7 @@ export default {
           }
         })
         .catch(x => {
-          if (x.status === 419) {
+          if (x.response.status === 419) {
             AuthService.signin();
           }
         });
@@ -219,7 +219,7 @@ export default {
         this.loadOrder();
       })
       .catch(x => {
-        if (x.status === 419) {
+        if (x.response.status === 419) {
           AuthService.signin();
         }
       });;
