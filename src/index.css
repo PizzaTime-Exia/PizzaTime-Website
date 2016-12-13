@@ -202,3 +202,7 @@ a:hover {
 .pizza-description {
   font-size: 12px;
 }
+
+.pizza-dropdown {
+  max-height: 50%;
+}
