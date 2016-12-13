@@ -6,8 +6,8 @@
           {{ selectedPizzaText }}
           <span class="mui-caret"></span>
         </button>
-        <ul class="mui-dropdown__menu">
-          <li v-for="pizza in pizzas" class="pizza-dropdown">
+        <ul class="mui-dropdown__menu pizza-dropdown">
+          <li v-for="pizza in pizzas">
             <a v-on:click="pizzaSelected(pizza.id)" href="#">
               <span class="pizza-title"><strong>{{ pizza.name }}</strong> {{ pizza.price }}€</span>
               <br>
@@ -33,7 +33,7 @@
           <tr v-if="!!order" v-for="item in order.items">
             <td>{{ item.pizza.name }}</td>
             <td>{{ item.base.name }}</td>
-            <td>{{ item.pizza.price }}</td>
+            <td>{{ item.pizza.price }}€</td>
             <td align="right"><button class="mui-btn mui-btn--small mui-btn--danger" v-on:click="deleteOrderItem(item.id)">X</button></td>
           </tr>
         </tbody>

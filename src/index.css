@@ -2,6 +2,7 @@ html, body, #root {
   margin: 0;
   height: 100%;
   font-family: 'Open Sans', sans-serif;
+  overflow-y: auto;
 }
 
 #root {
@@ -204,5 +205,6 @@ a:hover {
 }
 
 .pizza-dropdown {
-  max-height: 50%;
+  max-height: 330px;
+  overflow: auto;
 }
