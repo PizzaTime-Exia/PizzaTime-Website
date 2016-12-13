@@ -31,7 +31,7 @@
       <table class="mui-table mui-table--bordered items-table">
         <tbody>
           <tr v-if="!!order" v-for="item in order.items">
-            <td>{{ item.pizza.name }}</td>
+            <td><strong>{{ item.pizza.name }}</strong></td>
             <td>{{ item.base.name }}</td>
             <td>{{ item.pizza.price }}€</td>
             <td align="right"><button class="mui-btn mui-btn--small mui-btn--danger" v-on:click="deleteOrderItem(item.id)">X</button></td>
