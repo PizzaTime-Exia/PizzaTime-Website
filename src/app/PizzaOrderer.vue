@@ -49,6 +49,7 @@
 
 <script>
 import _ from 'lazy.js';
+import AuthService from './services/auth';
 import OrderService from './services/order';
 import PizzaService from './services/pizza';
 import BaseService from './services/base';
@@ -139,12 +140,22 @@ export default {
       if (this.order.id < 0) {
         OrderService
           .add(this.order.toApiFormat())
-          .then(x => this.loadOrder());
+          .then(x => this.loadOrder())
+          .catch(x => {
+            if (x.status === 419) {
+              AuthService.signin();
+            }
+          });
         alert(`${this.order.count} pizzas commandées.`);
       } else {
         OrderService
           .replace(this.order.id, this.order.toApiFormat())
-          .then(x => this.loadOrder());
+          .then(x => this.loadOrder())
+          .catch(x => {
+            if (x.status === 419) {
+              AuthService.signin();
+            }
+          });
         alert(`${this.order.count} pizzas commandées.`);
       }
     },
@@ -155,6 +166,11 @@ export default {
           .then(x => {
             this.order = new Order();
             alert('Commande annulée.');
+          })
+          .catch(x => {
+            if (x.status === 419) {
+              AuthService.signin();
+            }
           });
       }
     },
@@ -173,6 +189,11 @@ export default {
               this.order.add(pizza, base);
             });
           }
+        })
+        .catch(x => {
+          if (x.status === 419) {
+            AuthService.signin();
+          }
         });
     }
   },
@@ -190,7 +211,12 @@ export default {
       .then(response => {
         this.pizzas = response.data;
         this.loadOrder();
-      });
+      })
+      .catch(x => {
+        if (x.status === 419) {
+          AuthService.signin();
+        }
+      });;
   }
 };
 </script>

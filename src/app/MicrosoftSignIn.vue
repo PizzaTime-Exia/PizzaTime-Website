@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import AuthService from './services/auth.js';
+import AuthService from './services/auth';
 
 export default {
   name: 'MicrosoftSignIn',

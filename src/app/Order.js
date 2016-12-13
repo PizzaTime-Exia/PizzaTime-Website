@@ -3,11 +3,12 @@ import _ from 'lazy.js';
 let ID = 0;
 
 class Order {
-  constructor(items) {
+  constructor(user) {
     this.id = -1;
-    this.items = items || [];
+    this.items = [];
     this.delivred = false;
     this.paid = false;
+    this.user = user;
   }
 
   get isEmpty() {
