@@ -7,7 +7,13 @@
           <span class="mui-caret"></span>
         </button>
         <ul class="mui-dropdown__menu">
-          <li v-for="pizza in pizzas"><a v-on:click="pizzaSelected(pizza.id)" href="#">{{ pizza.name }} ({{ pizza.price }}€)</a></li>
+          <li v-for="pizza in pizzas">
+            <a v-on:click="pizzaSelected(pizza.id)" href="#">
+              <span class="pizza-title">{{ pizza.name }} {{ pizza.price }}€</span>
+              <br>
+              <span class="pizza-description">{{ pizza.description }}</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div id="base" class="mui-dropdown">
