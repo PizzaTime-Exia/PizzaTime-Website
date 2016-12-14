@@ -1,34 +1,23 @@
-<template>
-  <div>
-    <div v-if="!isEllasped" style="display: flex;">
+  <div class="countdown">
+    <span v-if="!isEllasped">
       <span>Il vous reste&nbsp;</span>
-      <div class="time-remaining">
-        {{ days | two_digits }}:{{ hours | two_digits }}:{{ minutes | two_digits }}:{{ seconds | two_digits }}
-      </div>
+      <span class="time-remaining">
+        <strong>{{ timeToOrderClose }}</strong>
+      </span>
       <span>&nbsp;pour commander.</span>
-    </div>
-    <div v-if="isEllasped">Vous ne pouvez plus commander pour cette semaine.</div>
-    <div>Livraison prévue le <span class="delivery-date">{{ deliveryDateText }}</span>.</div>
+    </span>
+    <span v-if="isEllasped">Vous ne pouvez plus commander pour cette semaine.</span>
+    <br>
+    <span>Livraison prévue le <span class="delivery-date"><strong>{{ deliveryDateText }}</strong></span>.</span>
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
+import moment from 'moment';
 
-Vue.filter('two_digits', function (value) {
-    if(value.toString().length <= 1)
-    {
-        return "0" + value.toString();
-    }
-    return value.toString();
-});
+moment.locale('fr');
 
 export default {
-  ready() {
-    setInterval(() => {
-      this.now = Math.trunc((new Date()).getTime() / 1000);
-    }, 1000);
-  },
   props : {
     maxOrderDate: {
       type: Object
@@ -37,32 +26,15 @@ export default {
       type: Object
     }
   },
-  data() {
-    return {
-      now: Math.trunc((new Date()).getTime() / 1000)
-    }
-  },
   computed: {
     isEllasped() {
       return (this.days + this.hours + this.minutes + this.seconds) <= 0;
     },
-    seconds() {
-      return (this.maxOrderDateInSeconds - this.now) % 60;
-    },
-    minutes() {
-      return Math.trunc((this.maxOrderDateInSeconds - this.now) / 60) % 60;
-    },
-    hours() {
-      return Math.trunc((this.maxOrderDateInSeconds - this.now) / 60 / 60) % 24;
-    },
-    days() {
-      return Math.trunc((this.maxOrderDateInSeconds - this.now) / 60 / 60 / 24);
+    timeToOrderClose() {
+      return moment(this.maxOrderDate.getTime()).toNow();
     },
     deliveryDateText() {
       return this.deliveryDate.toLocaleDateString();
-    },
-    maxOrderDateInSeconds() {
-      return Math.trunc(this.maxOrderDate.getTime() / 1000);
     }
   }
 }

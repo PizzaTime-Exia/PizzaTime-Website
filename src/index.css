@@ -208,3 +208,14 @@ a:hover {
   max-height: 330px;
   overflow: auto;
 }
+
+.countdown {
+  background-color: #d62d20;
+  width: 100%;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  text-align: center;
+  color: white;
+  padding: 5px;
+}
