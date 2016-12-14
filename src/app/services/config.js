@@ -1,7 +1,7 @@
 import api from './api';
 
 class ConfigService {
-  static orderDay() {
+  static getDates() {
     return api.get('/config/end_date');
   }
 }

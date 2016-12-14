@@ -1,5 +1,6 @@
 <template>
   <div class="pizza-orderer">
+    <countdown-component :delivery-date="deliveryDate" :max-order-date="maxOrderDate"></countdown-component>
     <div class="item-selector">
       <div id="pizza" class="mui-dropdown">
         <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
@@ -61,9 +62,13 @@ import PizzaService from './services/pizza';
 import BaseService from './services/base';
 import ConfigService from './services/config';
 import Order from './Order';
+import Countdown from './Countdown.vue';
 
 export default {
   name: 'PizzaOrderer',
+  components: {
+    'countdown-component': Countdown,
+  },
   data() {
     return {
       pizzas: [],
@@ -73,7 +78,8 @@ export default {
         base: null
       },
       order: new Order(),
-      orderDay: new Date()
+      maxOrderDate: new Date(),
+      deliveryDate: new Date()
     }
   },
   computed: {
@@ -100,11 +106,11 @@ export default {
       return this.selected.base ? this.selected.base.name : 'Choisissez une base';
     },
     nextFriday() {
-      return this.orderDay.toLocaleDateString();
+      return this.maxOrderDate.toLocaleDateString();
     },
     isDateAmbiguous() {
       let today = new Date();
-      let friday = new Date(this.orderDay.toISOString());
+      let friday = new Date(this.maxOrderDate.toISOString());
       today.setHours(0,0,0,0);
       friday.setHours(0,0,0,0);
       return (today.getTime() === friday.getTime());
@@ -205,9 +211,10 @@ export default {
   },
   created() {
     ConfigService
-      .orderDay()
+      .getDates()
       .then(response => {
-        this.orderDay = new Date(response.data);
+        this.maxOrderDate = new Date(response.data.maxOrderDate);
+        this.deliveryDate = new Date(response.data.deliveryDate);
         return BaseService.fetchAll();
       })
       .then(response => {
