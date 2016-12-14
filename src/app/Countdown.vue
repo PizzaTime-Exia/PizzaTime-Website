@@ -45,7 +45,7 @@ export default {
   props : {
     maxOrderDate: {
       type: Object
-    }
+    },
     deliveryDate: {
       type: Object
     }
