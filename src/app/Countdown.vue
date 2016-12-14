@@ -33,7 +33,7 @@ export default {
       return (this.days + this.hours + this.minutes + this.seconds) <= 0;
     },
     timeToOrderClose() {
-      return moment(this.maxOrderDate.getTime()).toNow();
+      return moment(this.maxOrderDate.getTime()).fromNow();
     },
     deliveryDateText() {
       return this.deliveryDate.toLocaleDateString();
