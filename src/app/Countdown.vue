@@ -1,14 +1,14 @@
 <template>
   <div>
-    <p v-if="!isEllasped">
-      <span>Il vous reste </span>
+    <div v-if="!isEllasped" style="display: flex;">
+      <span>Il vous reste&nbsp;</span>
       <div class="time-remaining">
         {{ days | two_digits }}:{{ hours | two_digits }}:{{ minutes | two_digits }}:{{ seconds | two_digits }}
       </div>
-      <span> pour commander.</span>
-    </p>
-    <p v-if="isEllasped">Vous ne pouvez plus commander pour cette semaine.</p>
-    <p>Livraison prévue le <span class="delivery-date">{{ deliveryDateText }}</span>.</p>
+      <span>&nbsp;pour commander.</span>
+    </div>
+    <div v-if="isEllasped">Vous ne pouvez plus commander pour cette semaine.</div>
+    <div>Livraison prévue le <span class="delivery-date">{{ deliveryDateText }}</span>.</div>
   </div>
 </template>
 
@@ -25,9 +25,9 @@ Vue.filter('two_digits', function (value) {
 
 export default {
   ready() {
-    window.setInterval(() => {
+    setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000);
-    },1000);
+    }, 1000);
   },
   props : {
     maxOrderDate: {
