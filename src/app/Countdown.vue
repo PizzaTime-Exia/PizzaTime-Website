@@ -31,8 +31,7 @@ export default {
   },
   props : {
     maxOrderDate: {
-      type: Object,
-      coerce: date => Math.trunc(date.getTime() / 1000)
+      type: Object
     },
     deliveryDate: {
       type: Object
@@ -48,19 +47,22 @@ export default {
       return (this.days + this.hours + this.minutes + this.seconds) <= 0;
     },
     seconds() {
-      return (this.maxOrderDate - this.now) % 60;
+      return (this.maxOrderDateInSeconds - this.now) % 60;
     },
     minutes() {
-      return Math.trunc((this.maxOrderDate - this.now) / 60) % 60;
+      return Math.trunc((this.maxOrderDateInSeconds - this.now) / 60) % 60;
     },
     hours() {
-      return Math.trunc((this.maxOrderDate - this.now) / 60 / 60) % 24;
+      return Math.trunc((this.maxOrderDateInSeconds - this.now) / 60 / 60) % 24;
     },
     days() {
-      return Math.trunc((this.maxOrderDate - this.now) / 60 / 60 / 24);
+      return Math.trunc((this.maxOrderDateInSeconds - this.now) / 60 / 60 / 24);
     },
     deliveryDateText() {
       return this.deliveryDate.toLocaleDateString();
+    },
+    maxOrderDateInSeconds() {
+      return Math.trunc(this.maxOrderDate.getTime() / 1000);
     }
   }
 }

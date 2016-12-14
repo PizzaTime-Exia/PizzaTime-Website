@@ -1,6 +1,5 @@
 <template>
   <div class="pizza-orderer">
-    <countdown-component :delivery-date="deliveryDate" :max-order-date="maxOrderDate"></countdown-component>
     <div class="item-selector">
       <div id="pizza" class="mui-dropdown">
         <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
@@ -51,6 +50,7 @@
         <span class="error-message">{{ errorMessage }}.</span>
       </div>
     </div>
+    <countdown-component :delivery-date="deliveryDate" :max-order-date="maxOrderDate"></countdown-component>
   </div>
 </template>
 
