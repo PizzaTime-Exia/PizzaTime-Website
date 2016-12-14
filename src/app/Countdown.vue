@@ -19,6 +19,7 @@ const momentFr = moment();
 momentFr.locale('fr');
 
 export default {
+  name: 'Countdown',
   props : {
     maxOrderDate: {
       type: Object
