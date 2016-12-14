@@ -1,3 +1,4 @@
+<template>
   <div class="countdown">
     <span v-if="!isEllasped">
       <span>Les commandes seront fermées&nbsp;</span>
