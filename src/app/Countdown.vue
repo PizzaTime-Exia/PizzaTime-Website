@@ -3,22 +3,7 @@
     <p v-if="!isEllasped">
       <span>Il vous reste </span>
       <div class="time-remaining">
-        <div>
-          <span class="digit">{{ days | two_digits }}</span>
-          <span class="text">&nbsp;Jours</span>
-        </div>
-        <div>
-          <span class="digit">{{ hours | two_digits }}</span>
-          <span class="text">&nbsp;Heures</span>
-        </div>
-        <div>
-          <span class="digit">{{ minutes | two_digits }}</span>
-          <span class="text">&nbsp;Minutes</span>
-        </div>
-        <div>
-          <span class="digit">{{ seconds | two_digits }}</span>
-          <span class="text">&nbsp;Secondes</span>
-        </div>
+        {{ days | two_digits }}:{{ hours | two_digits }}:{{ minutes | two_digits }}:{{ seconds | two_digits }}
       </div>
       <span> pour commander.</span>
     </p>
@@ -33,7 +18,7 @@ import Vue from 'vue';
 Vue.filter('two_digits', function (value) {
     if(value.toString().length <= 1)
     {
-        return "0"+value.toString();
+        return "0" + value.toString();
     }
     return value.toString();
 });
@@ -46,7 +31,8 @@ export default {
   },
   props : {
     maxOrderDate: {
-      type: Object
+      type: Object,
+      coerce: date => Math.trunc(date.getTime() / 1000)
     },
     deliveryDate: {
       type: Object
@@ -74,7 +60,7 @@ export default {
       return Math.trunc((this.maxOrderDate - this.now) / 60 / 60 / 24);
     },
     deliveryDateText() {
-      return this.deliveryDate.toLocaleString();
+      return this.deliveryDate.toLocaleDateString();
     }
   }
 }
