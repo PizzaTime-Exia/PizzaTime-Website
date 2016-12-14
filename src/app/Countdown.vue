@@ -1,10 +1,10 @@
   <div class="countdown">
     <span v-if="!isEllasped">
-      <span>Il vous reste&nbsp;</span>
+      <span>Les commandes seront fermées&nbsp;</span>
       <span class="time-remaining">
         <strong>{{ timeToOrderClose }}</strong>
       </span>
-      <span>&nbsp;pour commander.</span>
+      <span>.</span>
     </span>
     <span v-if="isEllasped">Vous ne pouvez plus commander pour cette semaine.</span>
     <br>
@@ -15,7 +15,8 @@
 <script>
 import moment from 'moment';
 
-moment.locale('fr');
+const momentFr = moment();
+momentFr.locale('fr');
 
 export default {
   props : {
@@ -31,7 +32,7 @@ export default {
       return (this.days + this.hours + this.minutes + this.seconds) <= 0;
     },
     timeToOrderClose() {
-      return moment(this.maxOrderDate.getTime()).toNow();
+      return momentFr(this.maxOrderDate.getTime()).toNow();
     },
     deliveryDateText() {
       return this.deliveryDate.toLocaleDateString();
