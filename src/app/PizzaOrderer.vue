@@ -41,7 +41,7 @@
     </div>
     <div class="order-confirm">
       <div class="order-button">
-        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€ | <span v-bind:class="{ 'date-warning': isDateAmbiguous }">{{ nextFriday }}</span></button>
+        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€</span></button>
       </div>
       <div class="order-button" v-if="canCancelOrder">
         <button class="add-item mui-btn mui-btn--danger" v-on:click="cancelOrder()">Annuler ma commande</button>
@@ -104,16 +104,6 @@ export default {
     },
     selectedBaseText() {
       return this.selected.base ? this.selected.base.name : 'Choisissez une base';
-    },
-    nextFriday() {
-      return this.maxOrderDate.toLocaleDateString();
-    },
-    isDateAmbiguous() {
-      let today = new Date();
-      let friday = new Date(this.maxOrderDate.toISOString());
-      today.setHours(0,0,0,0);
-      friday.setHours(0,0,0,0);
-      return (today.getTime() === friday.getTime());
     }
   },
   methods: {
