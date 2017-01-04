@@ -1,15 +1,15 @@
 <template>
   <div class="countdown">
-    <span v-if="!isEllasped">
+    <span v-if="!isLocked">
       <span>Les commandes seront fermées</span>
       <span class="time-remaining">
         <strong>{{ timeToOrderClose }}</strong>
       </span>
       <span>.</span>
     </span>
-    <span v-if="isEllasped">Les commandes sont fermées.</span>
+    <span v-if="isLocked">Les commandes sont fermées.</span>
     <br>
-    <span>Livraison prévue le <span class="delivery-date"><strong>{{ deliveryDateText }}</strong></span>.</span>
+    <span>Livraison prévue le <span class="delivery-date"><strong>{{ deliveryDateText }}</strong></span> entre midi et 13h salle 24.</span>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
     }
   },
   computed: {
-    isEllasped() {
+    isLocked() {
       return moment(this.maxOrderDate).isBefore(moment());
     },
     timeToOrderClose() {
