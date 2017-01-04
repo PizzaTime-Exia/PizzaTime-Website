@@ -47,7 +47,7 @@
         <button class="add-item mui-btn mui-btn--danger" v-on:click="cancelOrder()">Annuler ma commande</button>
       </div>
       <div class="order-details">
-        <span class="error-message">{{ errorMessage }}.</span>
+        <span class="error-message">{{ errorMessage }}</span>
       </div>
     </div>
     <countdown-component :delivery-date="deliveryDate" :max-order-date="maxOrderDate"></countdown-component>

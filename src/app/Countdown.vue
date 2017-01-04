@@ -7,7 +7,7 @@
       </span>
       <span>.</span>
     </span>
-    <span v-if="isEllasped">Vous ne pouvez plus commander pour cette semaine.</span>
+    <span v-if="isEllasped">Les commandes sont fermées.</span>
     <br>
     <span>Livraison prévue le <span class="delivery-date"><strong>{{ deliveryDateText }}</strong></span>.</span>
   </div>
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     isEllasped() {
-      return (this.days + this.hours + this.minutes + this.seconds) <= 0;
+      return moment(this.maxOrderDate).isBefore(moment());
     },
     timeToOrderClose() {
       return moment(this.maxOrderDate.getTime()).fromNow();
