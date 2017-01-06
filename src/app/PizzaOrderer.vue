@@ -41,10 +41,10 @@
     </div>
     <div class="order-confirm">
       <div class="order-button">
-        <button class="add-item mui-btn mui-btn--primary" v-bind:disabled="!isLocked" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€</span></button>
+        <button class="add-item mui-btn mui-btn--primary" v-bind:disabled="isLocked" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€</span></button>
       </div>
       <div class="order-button" v-if="canCancelOrder">
-        <button class="add-item mui-btn mui-btn--danger" v-bind:disabled="!isLocked" v-on:click="cancelOrder()">Annuler ma commande</button>
+        <button class="add-item mui-btn mui-btn--danger" v-bind:disabled="isLocked" v-on:click="cancelOrder()">Annuler ma commande</button>
       </div>
       <div class="order-details">
         <span class="error-message">{{ errorMessage }}</span>
