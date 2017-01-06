@@ -41,10 +41,10 @@
     </div>
     <div class="order-confirm">
       <div class="order-button">
-        <button class="add-item mui-btn mui-btn--primary" v-bind:disabled="isLocked" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€</span></button>
+        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€</span></button>
       </div>
       <div class="order-button" v-if="canCancelOrder">
-        <button class="add-item mui-btn mui-btn--danger" v-bind:disabled="isLocked" v-on:click="cancelOrder()">Annuler ma commande</button>
+        <button class="add-item mui-btn mui-btn--danger" v-on:click="cancelOrder()" :disabled="isOrderLocked">Annuler ma commande</button>
       </div>
       <div class="order-details">
         <span class="error-message">{{ errorMessage }}</span>
@@ -93,7 +93,7 @@ export default {
       return this.order.id >= 0 && !this.isOderLocked;
     },
     isOrderLocked() {
-      return this.order.paid || this.order.delivered;
+      return this.order.paid || this.order.delivered || this.areOrderLocked;
     },
     errorMessage() {
       if (this.order.paid) {
@@ -108,7 +108,7 @@ export default {
     selectedBaseText() {
       return this.selected.base ? this.selected.base.name : 'Choisissez une base';
     },
-    isLocked() {
+    areOrderLocked() {
       return moment(this.maxOrderDate).isBefore(moment());
     }
   },
@@ -133,6 +133,14 @@ export default {
       this.order.remove(itemId);
     },
     validateOrder() {
+      if (this.areOrderLocked) {
+        alert('Les commandes sont fermées pour cette semaine.');
+        return;
+      }
+      if (this.isOrderLocked) {
+        alert('Votre commande ayant été payée ou livrée, vous ne pouvez pas la modifier.');
+        return;
+      }
       if (this.order.isEmpty) {
         alert('Vous n\'avez rien commandé.');
         return;
