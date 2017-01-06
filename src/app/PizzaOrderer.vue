@@ -41,10 +41,10 @@
     </div>
     <div class="order-confirm">
       <div class="order-button">
-        <button class="add-item mui-btn mui-btn--primary" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€</span></button>
+        <button class="add-item mui-btn mui-btn--primary" v-bind:disabled="!isLocked" v-on:click="validateOrder()" :disabled="isOrderLocked">{{ orderText }} | {{ order.price }}€</span></button>
       </div>
       <div class="order-button" v-if="canCancelOrder">
-        <button class="add-item mui-btn mui-btn--danger" v-on:click="cancelOrder()">Annuler ma commande</button>
+        <button class="add-item mui-btn mui-btn--danger" v-bind:disabled="!isLocked" v-on:click="cancelOrder()">Annuler ma commande</button>
       </div>
       <div class="order-details">
         <span class="error-message">{{ errorMessage }}</span>
@@ -56,6 +56,7 @@
 
 <script>
 import _ from 'lazy.js';
+import moment from 'moment';
 import AuthService from './services/auth';
 import OrderService from './services/order';
 import PizzaService from './services/pizza';
@@ -63,6 +64,8 @@ import BaseService from './services/base';
 import ConfigService from './services/config';
 import Order from './Order';
 import Countdown from './Countdown.vue';
+
+moment.locale('fr');
 
 export default {
   name: 'PizzaOrderer',
@@ -104,6 +107,9 @@ export default {
     },
     selectedBaseText() {
       return this.selected.base ? this.selected.base.name : 'Choisissez une base';
+    },
+    isLocked() {
+      return moment(this.maxOrderDate).isBefore(moment());
     }
   },
   methods: {
@@ -158,7 +164,7 @@ export default {
               AuthService.signin();
             }
           });
-        alert(`${this.order.count} pizzas commandées.`);
+        alert(`${this.order.count} pizzas commandées.\nPensez à payer en salle 24 avant la fermeture des commandes.`);
       }
     },
     cancelOrder() {

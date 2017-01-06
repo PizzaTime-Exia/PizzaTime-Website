@@ -7,7 +7,7 @@
       </span>
       <span>.</span>
     </span>
-    <span v-if="isLocked">Les commandes sont fermées.</span>
+    <span v-if="isLocked">Les commandes sont <strong>fermées</strong>.</span>
     <br>
     <span>Livraison prévue le <span class="delivery-date"><strong>{{ deliveryDateText }}</strong></span> entre midi et 13h salle 24.</span>
   </div>
